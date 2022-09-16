@@ -1,9 +1,9 @@
 package com.fuad.repository;
 
-import com.fuad.entity.User;
+import com.fuad.entity.Teacher;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.UUID;
 
-public interface UserRepository extends MongoRepository<User, UUID> {
+public interface TeacherRepository extends MongoRepository<Teacher, UUID> {
 }

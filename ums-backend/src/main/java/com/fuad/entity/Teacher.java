@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "users")
-public class User {
+public class Teacher {
     @Id
     private UUID id;
     private String name;
