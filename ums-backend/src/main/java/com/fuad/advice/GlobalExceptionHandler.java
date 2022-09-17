@@ -5,6 +5,7 @@ import com.fuad.exception.ErrorResponse;
 import com.fuad.exception.ItemValidationError;
 import com.fuad.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.convert.ConverterNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +23,16 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    public static final String NOT_FOUND = "not_data_found";
-    public static final String VALIDATION_ERROR = "validation_error";
-    public static final String DUPLICATE_ENTRY = "duplicate_entry";
+    public static final String NOT_FOUND = "NO DATA FOUND";
+    public static final String VALIDATION_ERROR = "VALIDATION ERROR";
+    public static final String DUPLICATE_ENTRY = "DUPLICATE DATA FOUND";
+    public static final String CONVERT_ERROR = "CANNOT CONVERT DATA";
 
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<?> handleNotFoundException(NotFoundException e) {
         ErrorResponse response = new ErrorResponse(NOT_FOUND, e.getMessage());
         this.printStackTrace(e);
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DuplicateEntryException.class)
@@ -39,6 +41,14 @@ public class GlobalExceptionHandler {
         this.printStackTrace(e);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(ConverterNotFoundException.class)
+    protected ResponseEntity<?> handleDConverterNotFoundException(ConverterNotFoundException e) {
+        ErrorResponse response = new ErrorResponse(CONVERT_ERROR, e.getMessage());
+        this.printStackTrace(e);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {

@@ -7,8 +7,6 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +14,7 @@ import java.util.UUID;
 @Document(collection = "education_informations")
 public class EducationInformation {
     @Id
-    private UUID id;
+    private Long id;
     private String degreeName;
     private String instituteName;
     private String result;

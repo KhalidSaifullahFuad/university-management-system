@@ -1,6 +1,7 @@
 package com.fuad.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss Z")

@@ -32,6 +32,7 @@ public class Student {
     private String email;
     private String address;
     private Department department;
+    private List<Course> courseList;
     private String currentSemester;
     private String batch;
     private String studentId;

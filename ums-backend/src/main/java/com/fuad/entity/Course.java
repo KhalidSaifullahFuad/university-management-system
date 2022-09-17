@@ -26,4 +26,5 @@ public class Course {
     private String teacherId;
     private String teacherName;
     private String facultyCode;
+    private Double gpa;
 }
