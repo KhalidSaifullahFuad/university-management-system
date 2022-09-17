@@ -1,18 +1,19 @@
 package com.fuad.service;
 
+import com.fuad.dto.TeacherRequest;
 import com.fuad.entity.Teacher;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface TeacherService {
-    Teacher store(Teacher teacher);
+    Teacher store(TeacherRequest teacherRequest);
 
     Teacher getById(UUID id);
 
     List<Teacher> getAll();
 
-    Teacher update(Teacher teacher);
+    Teacher update(UUID id, TeacherRequest teacherRequest);
 
     void delete(UUID id);
 }
