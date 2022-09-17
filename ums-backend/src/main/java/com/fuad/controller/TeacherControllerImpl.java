@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/teacher")
 public class TeacherControllerImpl implements TeacherController {
     
     private final TeacherService teacherService;
@@ -27,7 +26,7 @@ public class TeacherControllerImpl implements TeacherController {
 
     // Update a Teacher
     @Override
-    public  ResponseEntity<Teacher> update(UUID id, TeacherRequest teacherRequest) {
+    public ResponseEntity<Teacher> update(UUID id, TeacherRequest teacherRequest) {
         Teacher updateTeacher = teacherService.update(id, teacherRequest);
         return new ResponseEntity<>(updateTeacher, HttpStatus.ACCEPTED);
     }

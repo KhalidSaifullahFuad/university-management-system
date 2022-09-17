@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+
+@RequestMapping("/api/teacher")
 public interface TeacherController {
     @PostMapping("/")
     ResponseEntity<Teacher> create(@Valid @RequestBody TeacherRequest teacherRequest);
