@@ -2,6 +2,8 @@ package com.fuad.entity;
 
 
 import com.fuad.enums.Gender;
+import com.fuad.enums.Role;
+import com.fuad.enums.StudentType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +41,8 @@ public class Student {
     private Integer totalCredit;
     private Integer completedCredits;
     private Double cgpa;
+    private StudentType studentType;
+    private Role role;
     private String image;
     private LocalDateTime createdAt;
 }

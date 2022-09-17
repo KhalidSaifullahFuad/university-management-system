@@ -25,6 +25,8 @@ public class Teacher {
     private Gender gender;
     private String phoneNumber;
     private String email;
+    private String teacherId;
+    private String facultyCode;
     private Role role;
     private String image;
     private LocalDateTime createdAt;

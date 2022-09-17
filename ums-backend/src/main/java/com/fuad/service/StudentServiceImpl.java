@@ -3,12 +3,14 @@ package com.fuad.service;
 import com.fuad.dto.StudentRequest;
 import com.fuad.entity.Student;
 import com.fuad.enums.Gender;
+import com.fuad.enums.Role;
 import com.fuad.exception.DuplicateEntryException;
 import com.fuad.exception.NotFoundException;
 import com.fuad.repository.DepartmentRepository;
 import com.fuad.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +23,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final DepartmentRepository departmentRepository;
     private final CourseService courseService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Student store(StudentRequest studentRequest) {
@@ -66,6 +69,8 @@ public class StudentServiceImpl implements StudentService {
     protected Student dtoToEntity(StudentRequest studentRequest) {
         Student student = new Student();
         BeanUtils.copyProperties(studentRequest, student); // copy values from studentRequest to student
+        student.setPassword(passwordEncoder.encode(studentRequest.getPassword()));
+        student.setRole(Role.ROLE_STUDENT);
         student.setGender(Gender.get(studentRequest.getGender()));
         student.setDepartment(departmentRepository.findByDepartmentNameOrDepartmentCode(studentRequest.getDepartment(), studentRequest.getDepartment())
                 .orElseThrow(() -> new NotFoundException("Department not found")));
@@ -73,5 +78,4 @@ public class StudentServiceImpl implements StudentService {
         student.setCreatedAt(LocalDateTime.now());
         return student;
     }
-
 }

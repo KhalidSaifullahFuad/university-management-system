@@ -8,6 +8,7 @@ import com.fuad.exception.NotFoundException;
 import com.fuad.repository.TeacherRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @Service
 public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository TeacherRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Teacher store(TeacherRequest teacherRequest) {
@@ -50,8 +52,9 @@ public class TeacherServiceImpl implements TeacherService {
     private Teacher dtoToEntity(TeacherRequest teacherRequest) {
         Teacher teacher = new Teacher();
         BeanUtils.copyProperties(teacherRequest, teacher);
+        teacher.setPassword(passwordEncoder.encode(teacherRequest.getPassword()));
         teacher.setGender(Gender.get(teacherRequest.getGender()));
-        teacher.setRole(Role.TEACHER);
+        teacher.setRole(Role.ROLE_TEACHER);
         teacher.setCreatedAt(LocalDateTime.now());
         return teacher;
     }
