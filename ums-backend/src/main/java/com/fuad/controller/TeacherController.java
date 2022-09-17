@@ -1,55 +1,27 @@
 package com.fuad.controller;
 
+import com.fuad.dto.TeacherRequest;
 import com.fuad.entity.Teacher;
-import com.fuad.service.TeacherService;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@AllArgsConstructor
-@RestController
-@RequestMapping("/teacher")
-public class TeacherController {
-    
-    private final TeacherService teacherService;
-
-    // Store a new Teacher
+public interface TeacherController {
     @PostMapping("/")
-    public ResponseEntity<Teacher> create(@RequestBody Teacher teacher) {
-        Teacher newTeacher = teacherService.store(teacher);
-        return new ResponseEntity<>(newTeacher, HttpStatus.CREATED);
-    }
+    ResponseEntity<Teacher> create(@Valid @RequestBody TeacherRequest teacherRequest);
 
-    // Update a Teacher
     @PutMapping("/")
-    public  ResponseEntity<Teacher> update(@RequestBody Teacher teacher) {
-        Teacher updateTeacher = teacherService.update(teacher);
-        return new ResponseEntity<>(updateTeacher, HttpStatus.ACCEPTED);
-    }
+    ResponseEntity<Teacher> update(@PathVariable UUID id, @Valid @RequestBody TeacherRequest teacherRequest);
 
-    // Fetch a Teacher by id
     @GetMapping("/{id}")
-    public ResponseEntity<Teacher> getById(@PathVariable UUID id) {
-        Teacher teacher = teacherService.getById(id);
-        return ResponseEntity.ok(teacher);
-    }
+    ResponseEntity<Teacher> getById(@PathVariable UUID id);
 
-    // Fetch all Teachers
     @GetMapping("/")
-    public ResponseEntity<List<Teacher>> getAll() {
-        List<Teacher> teachers = teacherService.getAll();
-        return ResponseEntity.ok(teachers);
-    }
+    ResponseEntity<List<Teacher>> getAll();
 
-    // Delete a Teacher
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable UUID id) {
-        teacherService.delete(id);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
-
+    ResponseEntity<?> delete(@PathVariable UUID id);
 }
