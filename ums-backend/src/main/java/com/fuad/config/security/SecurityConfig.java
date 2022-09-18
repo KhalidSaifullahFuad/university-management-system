@@ -1,4 +1,4 @@
-package com.fuad.config;
+package com.fuad.config.security;
 
 import com.fuad.service.AuthService;
 import lombok.AllArgsConstructor;
@@ -20,17 +20,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                .cors().and()
                 .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/api/student/**","/api/course/**","/api/department/**").hasRole("STUDENT")
-                .anyRequest().authenticated()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/api/**").hasRole("TEACHER")
-                .and()
+                .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers("/api/auth/**")
+                        .permitAll()
+                        .antMatchers("/v2/api-docs",
+                                "/configuration/ui",
+                                "/swagger-resources/**",
+                                "/configuration/security",
+                                "/swagger-ui/**",
+                                "/webjars/**")
+                        .permitAll()
+                        .antMatchers("/api/student/**").hasRole("STUDENT")
+                        .antMatchers("/api/**").hasRole("TEACHER")
+                        .anyRequest()
+                        .authenticated())
                 .build();
     }
 
